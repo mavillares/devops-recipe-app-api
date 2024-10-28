@@ -7,10 +7,12 @@ services:
       args:
         - DEV=true
     ports:
-      - "8000:8000"
+      - "8888:8000"
+      #- "8000:8000"
     volumes:
       - ./app:/app
-      - dev-static-data:/vol/web
+      - dev-static-data:/vol/web/static
+      - dev-media-data:/vol/web/media
     command: >
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
@@ -20,6 +22,7 @@ services:
       - DB_NAME=devdb
       - DB_USER=devuser
       - DB_PASS=changeme
+      - ALLOWED_HOSTS=192.168.1.137
       - DEBUG=1
     depends_on:
       - db
@@ -36,3 +39,4 @@ services:
 volumes:
   dev-db-data:
   dev-static-data:
+  dev-media-data:
